@@ -11,16 +11,22 @@
     @vite('resources/css/app.css')
 {{--    <script src="//unpkg.com/alpinejs" defer></script>--}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Inside your <head> tag -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
-<body>
+<body class="font-sans">
 <div>
     <x-partials.nav/>
 </div>
 
 <div>
     {{$slot}}
+</div>
+
+<div>
+    <x-partials.footer />
 </div>
 
 </body>

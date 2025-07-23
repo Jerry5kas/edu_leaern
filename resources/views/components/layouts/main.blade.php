@@ -8,11 +8,17 @@
     <title>Document</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
-<body>
+<body class="font-sans">
 <x-dashboard.header/>
 <div>
     {{$slot}}
+</div>
+
+<div>
+    <x-partials.footer />
 </div>
 </body>
 </html>
