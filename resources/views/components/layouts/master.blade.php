@@ -9,7 +9,9 @@
     <title>Document</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/app.css')
-    <script src="//unpkg.com/alpinejs" defer></script>
+{{--    <script src="//unpkg.com/alpinejs" defer></script>--}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 
 <body>
