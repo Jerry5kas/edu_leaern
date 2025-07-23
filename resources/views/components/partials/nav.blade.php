@@ -1,6 +1,4 @@
 
-
-
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.store('modal', {
@@ -76,7 +74,7 @@
 
             <!-- Continue with Email (Login only) -->
             <div class="text-center" x-show="$store.modal.authTab === 'login'">
-                <a href="#" class="text-sm font-semibold underline text-gray-800">Continue with email</a>
+                <a href="{{ route('login') }}" class="text-sm font-semibold underline text-gray-800">Continue with email</a>
             </div>
 
             <!-- Help Text -->
