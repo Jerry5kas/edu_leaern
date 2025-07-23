@@ -16,9 +16,9 @@ class GoogleController extends Controller
     }
     public function handleGoogleCallback(){
         try {
-            $googleuser = Socialite::driver('google')->stateless()->user();
+            $googleuser = Socialite::driver('google')->user();
 
-            $user = User::updateOrCreate(
+            $user = User::firstOrCreate(
                 ['email' => $googleuser->getemail()],
                 [
                     'name' => $googleuser->getName(),
@@ -28,7 +28,7 @@ class GoogleController extends Controller
                 ]
             );
             Auth::login($user);
-            return redirect('/');
+            return redirect('/dashboard');
         } catch (Exception $e){
             return redirect('/login')->with('error','something went wrong');
         }

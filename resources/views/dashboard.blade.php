@@ -1,10 +1,12 @@
 <x-layouts.main>
+        <div class="font-bold text-center text-2xl">
+            Welcome to Dashboard
+        </div>
 
-    <div>
-        Dash board
-    </div>
-    <div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dignissimos et eum explicabo illum iusto labore
-        magni necessitatibus obcaecati officiis, quam quas rem sit, totam, vel voluptates voluptatibus. Ad, quo!
-    </div>
+        @if($user)
+            <h2 class="font-semibold text-center text-xl">Hi, {{ $user->name }}</h2>
+        @else
+            <p class="text-center text-red-500">You are not logged in</p>
+        @endif
+
 </x-layouts.main>

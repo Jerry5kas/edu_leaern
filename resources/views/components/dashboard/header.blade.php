@@ -102,7 +102,7 @@
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Settings</a>
                         <div class="border-t"></div>
-                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</a>
+                        <a href="{{ route('home.login') }}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</a>
                     </div>
                 </div>
 
