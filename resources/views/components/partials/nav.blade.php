@@ -112,7 +112,7 @@
 
                 <a href="javascript:void(0)"
                    @click="$store.modal.authTab = 'register'; $store.modal.showAuth = true"
-                   class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition">Join for Free</a>
+                   class="bg-slate-600 px-4 py-2 rounded hover:bg-slate-700 transition">Join for Free</a>
             </div>
 
             <!-- Hamburger (Mobile) -->
@@ -143,7 +143,7 @@
             </a>
             <a href="javascript:void(0)"
                @click="$store.modal.authTab = 'register'; $store.modal.showAuth = true; open = false"
-               class="block py-2 bg-blue-600 text-center rounded mt-2 hover:bg-blue-700 transition">
+               class="block py-2 bg-slate-600 text-center rounded mt-2 hover:bg-slate-700 transition">
                 Join for Free
             </a>
         </div>
