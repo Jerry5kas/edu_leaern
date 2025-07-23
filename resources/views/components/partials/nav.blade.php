@@ -67,7 +67,6 @@
                 <input type="tel" placeholder="Enter your mobile number"
                        class="flex-1 text-sm focus:outline-none text-gray-700">
             </div>
-
             <!-- Action Button -->
             <button
                 class="w-full py-2 rounded font-medium mb-4"
