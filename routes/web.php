@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\GoogleController;
-use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +23,5 @@ Route::get('auth/login', [GoogleController::class, 'redirectToGoogle'])->name('l
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::get('/profile', [ProfileController::class, 'profile'])->name('auth.profile');
+Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('auth.profile.update');
+

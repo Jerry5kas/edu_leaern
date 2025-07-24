@@ -3,17 +3,28 @@
         <div class="bg-white shadow-xl rounded-2xl p-6 md:p-8 w-full max-w-4xl">
             <div class="flex flex-col md:flex-row md:items-center gap-6">
                 <!-- Avatar -->
-                <div class="flex justify-center md:justify-start">
-                    <svg class="w-24 h-24 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
-                    </svg>
-                </div>
+                <div class="flex flex-col items-center md:items-start">
+                    @if($user->profile)
+                        <img src="{{ asset('storage/profile_images/' . $user->profile) }}" alt="Profile"
+                             class="w-24 h-24 rounded-full object-cover mb-2 border">
+                    @endif
 
+                    <form action="{{ route('auth.profile.update') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
+                        @csrf
+                        <label class="cursor-pointer  text-white px-6 rounded-full hover:bg-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-700">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25v7.5a2.25 2.25 0 002.25 2.25h15a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-2.878a1.5 1.5 0 01-1.06-.44l-.94-.94A1.5 1.5 0 0012.439 4.5h-.878a1.5 1.5 0 00-1.06.44l-.94.94a1.5 1.5 0 01-1.06.44H5.25A2.25 2.25 0 002.25 8.25z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <input type="file" name="profile" accept="image/*" class="hidden" onchange="this.form.submit()">
+                        </label>
+                    </form>
+                </div>
                 <!-- Profile Info -->
                 <div class="flex-1 text-center md:text-left">
-                    <h2 class="text-2xl font-bold text-gray-800">Azhagirishankar K</h2>
-                    <p class="text-gray-500 mt-1">Joined Unacademy in Jun 2020</p>
+                    <h2 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h2>
+                    <p class="text-gray-500 mt-1">Joined Unacademy in {{ date('Y') }}</p>
 
                     <!-- Stats -->
                     <div class="mt-6 flex flex-col sm:flex-row justify-center md:justify-start gap-4">
