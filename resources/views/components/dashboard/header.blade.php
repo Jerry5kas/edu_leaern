@@ -92,14 +92,25 @@
 
                 <!-- Profile Button -->
                 <div class="relative">
-                    <button @click="profileOpen = !profileOpen" class="w-10 h-10 rounded-full border border-gray-300 shadow-sm overflow-hidden focus:outline-none">
-                        <img src="https://i.pravatar.cc/100?img=12" alt="Profile" class="w-full h-full object-cover">
-                    </button>
+                    @php
+                        $user = Auth::user();
+                    @endphp
 
+                    <button @click="profileOpen = !profileOpen"
+                            class="w-10 h-10 rounded-full border border-gray-300 shadow-sm overflow-hidden focus:outline-none">
+                        @if($user && $user->profile)
+                            <img src="{{ asset('storage/profile_images/' . $user->profile) }}"
+                                 alt="Profile" class="w-full h-full object-cover">
+                        @else
+                            <!-- Default avatar if no profile uploaded -->
+                            <img src="{{ asset('default-avatar.png') }}"
+                                 alt="Default Profile" class="w-full h-full object-cover">
+                        @endif
+                    </button>
                     <!-- Profile Dropdown -->
                     <div x-show="profileOpen" @click.outside="profileOpen = false" x-transition
                          class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
-                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
+                        <a href="{{ route('auth.profile') }}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Settings</a>
                         <div class="border-t"></div>
                         <a href="{{ route('home.login') }}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</a>
