@@ -1,4 +1,3 @@
-
 <!-- Sticky Navbar -->
 <nav class="bg-white shadow-sm border-b sticky top-0 z-50" x-data="{ profileOpen: false, menuOpen: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,10 +109,17 @@
                     <!-- Profile Dropdown -->
                     <div x-show="profileOpen" @click.outside="profileOpen = false" x-transition
                          class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
-                        <a href="{{ route('auth.profile') }}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
+                        @if($user)
+                            <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">{{ $user->name }}</p>
+                        @else
+                            <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Guest</p>
+                        @endif
+                        <a href="{{ route('auth.profile') }}"
+                           class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Settings</a>
                         <div class="border-t"></div>
-                        <a href="{{ route('home.login') }}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</a>
+                        <a href="{{ route('home.login') }}"
+                           class="block px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</a>
                     </div>
                 </div>
 
@@ -123,7 +129,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
-                    <svg x-show="menuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg x-show="menuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M6 18L18 6M6 6l12 12"/>
                     </svg>

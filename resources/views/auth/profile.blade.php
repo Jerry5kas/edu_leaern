@@ -4,10 +4,10 @@
             <div class="flex flex-col md:flex-row md:items-center gap-6">
                 <!-- Avatar -->
                 <div class="flex flex-col items-center md:items-start">
-                    @if($user->profile)
-                        <img src="{{ asset('storage/profile_images/' . $user->profile) }}" alt="Profile"
-                             class="w-24 h-24 rounded-full object-cover mb-2 border">
-                    @endif
+
+                    <img src="{{ $user->profile ? asset('storage/profile_images/' . $user->profile) : asset('images/default-profile.png') }}"
+                         alt="Profile"
+                         class="w-24 h-24 rounded-full object-cover mb-2 border">
 
                     <form action="{{ route('auth.profile.update') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                         @csrf
@@ -21,6 +21,7 @@
                         </label>
                     </form>
                 </div>
+
                 <!-- Profile Info -->
                 <div class="flex-1 text-center md:text-left">
                     <h2 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h2>
@@ -42,6 +43,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 

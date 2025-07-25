@@ -7,7 +7,7 @@
             India’s top educators
         </h1>
         <p class="text-gray-600">
-            Over <span class="text-green-500 font-semibold">10 crore</span> learners trust us for their preparation
+            Over <span class="text-green-500 font-semibold">10k</span> learners trust us for their preparation
         </p>
 
         <!-- Form -->

@@ -8,6 +8,7 @@
     <title>Document</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
@@ -18,7 +19,7 @@
 </div>
 
 <div>
-    <x-partials.footer />
+    <x-partials.footer/>
 </div>
 </body>
 </html>
