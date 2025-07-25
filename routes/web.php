@@ -32,3 +32,13 @@ Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.logi
 Route::get('/admin/register', [AdminController::class, 'registerForm'])->name('admin.register');
 Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+
+Route::get('/courses', function (){
+    return view('course.index');
+});
+
+Route::get('/courses/show', function (){
+    return view('course.show');
+});
+

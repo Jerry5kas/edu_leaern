@@ -5,7 +5,9 @@
 
             <!-- Logo -->
             <div class="text-xl font-bold text-slate-800">
-                Logo
+                <a href="/dashboard">
+                    Edu learn
+                </a>
             </div>
 
             <!-- Search Box with Suggestions -->

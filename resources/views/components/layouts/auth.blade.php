@@ -8,7 +8,8 @@
     <title>Document</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
-
+    <script src="https://unpkg.com/@heroicons/vue@2.0.16/20/solid/index.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/@heroicons/vue@2.0.16/20/solid/style.css" rel="stylesheet">
 </head>
 <body>
 <div>

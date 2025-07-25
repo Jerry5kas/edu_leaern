@@ -22,6 +22,7 @@
         <!-- Class Cards Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <template x-for="(item, index) in filteredItems" :key="index">
+                <a href="/courses">
                 <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition duration-300">
                     <div class="relative">
                         <img :src="item.image" alt="Thumbnail" class="w-full h-40 object-cover">
@@ -40,6 +41,7 @@
                         <p class="text-xs text-gray-500 mt-1" x-text="item.instructor"></p>
                     </div>
                 </div>
+                </a>
             </template>
         </div>
 
