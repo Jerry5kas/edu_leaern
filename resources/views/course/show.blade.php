@@ -1,5 +1,5 @@
 <x-layouts.main>
-     <div x-data class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-xl space-y-6 py-5">
+    <div x-data class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-xl space-y-6 py-5">
 
         <!-- Breadcrumb Navigation -->
         <div class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
@@ -24,14 +24,15 @@
                         class="absolute bottom-4 left-4 bg-white bg-opacity-80 px-3 py-1 rounded-full flex items-center gap-2 text-sm font-semibold">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"
                              viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.752 11.168l-4.596-2.65A1 1 0 009 9.26v5.48a1 1 0 001.156.987l4.596-2.65a1 1 0 000-1.74z"/>
+                            <path
+                                d="M14.752 11.168l-4.596-2.65A1 1 0 009 9.26v5.48a1 1 0 001.156.987l4.596-2.65a1 1 0 000-1.74z"/>
                         </svg>
                         PREVIEW
                     </button>
                 </div>
 
                 <!-- Modal -->
-                <div x-show="open" x-cloak  @keydown.escape.window="open = false"
+                <div x-show="open" x-cloak @keydown.escape.window="open = false"
                      class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
                      x-transition>
                     <button @click="open = false"
@@ -39,7 +40,8 @@
                         &times;
                     </button>
 
-                    <div  @click.outside="open = false" class="bg-white rounded-lg shadow-lg max-w-3xl w-full p-4 relative">
+                    <div @click.outside="open = false"
+                         class="bg-white rounded-lg shadow-lg max-w-3xl w-full p-4 relative">
                         <!-- Close Button -->
 
 
@@ -164,50 +166,57 @@
     ]
 }" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-12">
 
-        <template x-for="(week, wIndex) in weeks" :key="wIndex"  class="mb-12">
-            <div class="flex gap-x-12 items-center bg-gray-50 px-5">
-                <!-- Week Header -->
-                <div class=" mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800" x-text="week.title"></h2>
-                    <p class="text-gray-500 text-sm" x-text="week.range"></p>
-                    <p class="text-sm text-slate-500 mt-1" x-text="`${week.total} lessons`"></p>
-                </div>
+        <template x-for="(week, wIndex) in weeks" :key="wIndex">
+            <div class="bg-gray-50 p-5 rounded-xl">
+                <div class="flex flex-col lg:flex-row gap-6 lg:items-start">
 
-                <!-- Lessons List -->
-                <div class="w-2/3 mx-auto space-y-4">
-                    <template x-for="(lesson, index) in week.lessons" :key="index">
-                        <div @click="alert('Please buy a subscription to access this lesson.')"
-                             class="flex items-start justify-between bg-white shadow rounded-lg p-4 sm:p-6 cursor-pointer hover:bg-gray-50 transition">
+                    <!-- Week Header -->
+                    <div class="lg:w-1/3">
+                        <h2 class="text-2xl font-bold text-gray-800" x-text="week.title"></h2>
+                        <p class="text-gray-500 text-sm" x-text="week.range"></p>
+                        <p class="text-sm text-slate-500 mt-1" x-text="`${week.total} lessons`"></p>
+                    </div>
 
-                            <!-- Date -->
-                            <div class="flex">
-                                <div class="w-16 shrink-0 text-center">
-                                    <p class="text-xs text-gray-500 font-medium" x-text="lesson.date.split(' ')[0]"></p>
-                                    <p class="text-lg font-bold text-gray-700" x-text="lesson.date.split(' ')[1]"></p>
+                    <!-- Lessons List -->
+                    <div class="flex-1 space-y-4">
+                        <template x-for="(lesson, index) in week.lessons" :key="index">
+                            <div @click="alert('Please buy a subscription to access this lesson.')"
+                                 class="flex items-start justify-between bg-white shadow rounded-lg p-4 sm:p-6 cursor-pointer hover:bg-gray-50 transition">
+
+                                <!-- Date and Info -->
+                                <div class="flex items-start">
+                                    <!-- Date -->
+                                    <div class="w-16 shrink-0 text-center">
+                                        <p class="text-xs text-gray-500 font-medium"
+                                           x-text="lesson.date.split(' ')[0]"></p>
+                                        <p class="text-lg font-bold text-gray-700"
+                                           x-text="lesson.date.split(' ')[1]"></p>
+                                    </div>
+
+                                    <!-- Lesson Info -->
+                                    <div class="ml-4">
+                                        <h3 class="text-base font-semibold text-gray-800" x-text="lesson.title"></h3>
+                                        <p class="text-sm text-gray-500 mt-1" x-text="lesson.meta"></p>
+                                    </div>
                                 </div>
 
-                                <!-- Lesson Info -->
-                                <div class="ml-4">
-                                    <h3 class="text-base font-semibold text-gray-800" x-text="lesson.title"></h3>
-                                    <p class="text-sm text-gray-500 mt-1" x-text="lesson.meta"></p>
+                                <!-- Lock Icon -->
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor"
+                                         stroke-width="1.5"
+                                         viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75M6.75 10.5h10.5A2.25 2.25 0 0 1 19.5 12.75v6.75a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5v-6.75A2.25 2.25 0 0 1 6.75 10.5Z"/>
+                                    </svg>
                                 </div>
                             </div>
-
-                            <!-- Lock Icon -->
-                            <div class="flex items-center">
-                                <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5"
-                                     viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75M6.75 10.5h10.5A2.25 2.25 0 0 1 19.5 12.75v6.75a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5v-6.75A2.25 2.25 0 0 1 6.75 10.5Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                 </div>
-
             </div>
         </template>
 
     </div>
+
 
 </x-layouts.main>
