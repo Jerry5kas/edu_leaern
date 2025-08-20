@@ -33,7 +33,6 @@ Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->nam
 //Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 //Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-
 Route::get('/courses', function (){
     return view('course.index');
 });
