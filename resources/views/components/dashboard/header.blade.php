@@ -94,28 +94,28 @@
                 <!-- Profile Button -->
                 <div class="relative">
                     @php
-                        $user = Auth::user();
+//                        $user = Auth::user();
                     @endphp
 
                     <button @click="profileOpen = !profileOpen"
                             class="w-10 h-10 rounded-full border border-gray-300 shadow-sm overflow-hidden focus:outline-none">
-                        @if($user && $user->profile)
-                            <img src="{{ asset('storage/profile_images/' . $user->profile) }}"
-                                 alt="Profile" class="w-full h-full object-cover">
-                        @else
+{{--                        @if($user && $user->profile)--}}
+{{--                            <img src="{{ asset('storage/profile_images/' . $user->profile) }}"--}}
+{{--                                 alt="Profile" class="w-full h-full object-cover">--}}
+{{--                        @else--}}
                             <!-- Default avatar if no profile uploaded -->
                             <img src="{{ asset('default-avatar.png') }}"
                                  alt="Default Profile" class="w-full h-full object-cover">
-                        @endif
+{{--                        @endif--}}
                     </button>
                     <!-- Profile Dropdown -->
                     <div x-show="profileOpen" @click.outside="profileOpen = false" x-transition
                          class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
-                        @if($user)
-                            <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">{{ $user->name }}</p>
-                        @else
+{{--                        @if($user)--}}
+{{--                            <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">{{ $user->name }}</p>--}}
+{{--                        @else--}}
                             <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Guest</p>
-                        @endif
+{{--                        @endif--}}
                         <a href="{{ route('auth.profile') }}"
                            class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Settings</a>

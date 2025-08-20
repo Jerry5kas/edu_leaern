@@ -27,11 +27,11 @@ Route::get('/profile', [ProfileController::class, 'profile'])->name('auth.profil
 Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('auth.profile.update');
 
 //Admin routes
-Route::get('/admin/login', [AdminController::class, 'loginForm'])->name('admin.login');
-Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
-Route::get('/admin/register', [AdminController::class, 'registerForm'])->name('admin.register');
-Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+//Route::get('/admin/login', [AdminController::class, 'loginForm'])->name('admin.login');
+//Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+//Route::get('/admin/register', [AdminController::class, 'registerForm'])->name('admin.register');
+//Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
+//Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 
 Route::get('/courses', function (){
