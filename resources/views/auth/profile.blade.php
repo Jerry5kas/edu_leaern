@@ -9,7 +9,7 @@
                          alt="Profile"
                          class="w-24 h-24 rounded-full object-cover mb-2 border">
 
-                    <form action="" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
+                    <form action=" " method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                         @csrf
                         <label class="cursor-pointer  text-white px-6 rounded-full hover:bg-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
