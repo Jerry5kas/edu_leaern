@@ -5,11 +5,11 @@
                 <!-- Avatar -->
                 <div class="flex flex-col items-center md:items-start">
 
-                    <img src="{{ $user->profile ? asset('storage/profile_images/' . $user->profile) : asset('images/default-profile.png') }}"
+                    <img src="{{ asset('images/default-profile.png') }}"
                          alt="Profile"
                          class="w-24 h-24 rounded-full object-cover mb-2 border">
 
-                    <form action="{{ route('auth.profile.update') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
+                    <form action="" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                         @csrf
                         <label class="cursor-pointer  text-white px-6 rounded-full hover:bg-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -24,7 +24,8 @@
 
                 <!-- Profile Info -->
                 <div class="flex-1 text-center md:text-left">
-                    <h2 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h2>
+{{--                    <h2 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h2>--}}
+                    <h2 class="text-2xl font-bold text-gray-800">Guest</h2>
                     <p class="text-gray-500 mt-1">Joined Unacademy in {{ date('Y') }}</p>
 
                     <!-- Stats -->
