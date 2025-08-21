@@ -17,14 +17,15 @@ use App\Http\Controllers\Auth\ProfileController;
 |
 */
 
-Route::get('/',[HomeController::class,'login'])->name('home.login');
-Route::get('/dashboard',[HomeController::class,'dashboard'])->name('home.dashboard');
+Route::get('/',[HomeController::class,'showForm'])->name('login');
+Route::post('/login',[HomeController::class,'login'])->name('home.login');
+//Route::get('/dashboard',[HomeController::class,'dashboard'])->name('home.dashboard');
 
 Route::get('auth/login', [GoogleController::class, 'redirectToGoogle'])->name('login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::get('/profile', [ProfileController::class, 'profile'])->name('auth.profile');
-Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('auth.profile.update');
+//Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('auth.profile.update');
 
 //Admin routes
 //Route::get('/admin/login', [AdminController::class, 'loginForm'])->name('admin.login');

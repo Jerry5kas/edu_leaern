@@ -65,6 +65,16 @@
                 <input type="tel" placeholder="Enter your mobile number"
                        class="flex-1 text-sm focus:outline-none text-gray-700">
             </div>
+            <div class="flex items-center border border-gray-300 rounded px-3 py-2 mb-4">
+                <span class="text-gray-600 text-sm mr-2">+91</span>
+                <input type="password" placeholder="Enter your password"
+                       class="flex-1 text-sm focus:outline-none text-gray-700">
+            </div>
+            <div class="flex items-center border border-gray-300 rounded px-3 py-2 mb-4">
+                <span class="text-gray-600 text-sm mr-2">+91</span>
+                <input type="confirm_password" placeholder="Enter your confirm password"
+                       class="flex-1 text-sm focus:outline-none text-gray-700">
+            </div>
             <!-- Action Button -->
             <button
                 class="w-full py-2 rounded font-medium mb-4"
