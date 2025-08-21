@@ -59,25 +59,103 @@
             </p>
 
             <!-- Mobile Input -->
-            <div class="flex items-center border border-gray-300 rounded px-3 py-2 mb-4">
-                <img src="https://flagcdn.com/in.svg" alt="India" class="w-5 h-5 mr-2">
-                <span class="text-gray-600 text-sm mr-2">+91</span>
-                <input type="tel" placeholder="Enter your mobile number"
-                       class="flex-1 text-sm focus:outline-none text-gray-700">
+            <div
+                x-data="countrySelector()"
+                x-init="loadCountries()"
+                class="w-80 mx-auto mt-6 mb-4 relative"
+            >
+                <!-- Selected country (input wrapper) -->
+                <div class="flex items-center border border-gray-300 rounded px-3 py-2 relative">
+                    <!-- Country selector trigger -->
+                    <div class="flex items-center cursor-pointer mr-2" @click="open = !open">
+                        <img :src="selected.flag" alt="" class="w-5 h-5 mr-2">
+                        <span class="text-gray-600 text-sm" x-text="selected.dial_code"></span>
+                        <svg class="w-4 h-4 text-gray-500 ml-1 transform"
+                             :class="open ? 'rotate-180' : ''"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+
+                    <!-- Phone input -->
+                    <input type="tel" placeholder="Enter your mobile number"
+                           class="flex-1 text-sm focus:outline-none text-gray-700">
+                </div>
+
+                <!-- Dropdown -->
+                <div x-show="open"
+                     @click.away="open = false"
+                     class="absolute mt-1 w-80 bg-white border border-gray-200 rounded shadow-lg max-h-56 overflow-y-auto z-10">
+                    <template x-for="(country, code) in countries" :key="code">
+                        <div @click="selectCountry(country)"
+                             class="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                            <img :src="country.flag" class="w-5 h-5 mr-2" :alt="country.name">
+                            <span class="text-sm text-gray-700" x-text="country.name"></span>
+                            <span class="ml-auto text-xs text-gray-500" x-text="country.dial_code"></span>
+                        </div>
+                    </template>
+                </div>
             </div>
-            <div class="flex items-center border border-gray-300 rounded px-3 py-2 mb-4">
-                <span class="text-gray-600 text-sm mr-2">+91</span>
-                <input type="password" placeholder="Enter your password"
-                       class="flex-1 text-sm focus:outline-none text-gray-700">
+
+            <div x-data="{ showPw: false, showConfirmPw: false }" class="space-y-4 mb-4">
+                <!-- Password -->
+                <div class="relative flex items-center border border-gray-300 rounded px-3 py-2">
+                    <input :type="showPw ? 'text' : 'password'"
+                           placeholder="Enter your password"
+                           class="flex-1 text-sm focus:outline-none text-gray-700">
+                    <button type="button"
+                            @click="showPw = !showPw"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <!-- Eye icon -->
+                        <svg x-show="!showPw" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <!-- Eye Slash -->
+                        <svg x-show="showPw" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3.98 8.223A10.477 10.477 0 002.036 12.32a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.95 0 3.767-.5 5.322-1.377M6.228 6.228A10.451 10.451 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639a10.451 10.451 0 01-1.293 2.366M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Confirm Password (only in Register mode) -->
+                <div x-show="$store.modal.authTab === 'register'"
+                     x-transition
+                     class="relative flex items-center border border-gray-300 rounded px-3 py-2">
+                    <input :type="showConfirmPw ? 'text' : 'password'"
+                           placeholder="Enter your confirm password"
+                           class="flex-1 text-sm focus:outline-none text-gray-700">
+                    <button type="button"
+                            @click="showConfirmPw = !showConfirmPw"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <!-- Eye icon -->
+                        <svg x-show="!showConfirmPw" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <!-- Eye Slash -->
+                        <svg x-show="showConfirmPw" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3.98 8.223A10.477 10.477 0 002.036 12.32a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.95 0 3.767-.5 5.322-1.377M6.228 6.228A10.451 10.451 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639a10.451 10.451 0 01-1.293 2.366M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div class="flex items-center border border-gray-300 rounded px-3 py-2 mb-4">
-                <span class="text-gray-600 text-sm mr-2">+91</span>
-                <input type="confirm_password" placeholder="Enter your confirm password"
-                       class="flex-1 text-sm focus:outline-none text-gray-700">
-            </div>
+
+
             <!-- Action Button -->
             <button
-                class="w-full py-2 rounded font-medium mb-4"
+                class="w-full py-2 rounded font-medium my-4"
                 :class="$store.modal.authTab === 'login' ? 'bg-gray-200 text-gray-700' : 'bg-blue-600 text-white hover:bg-blue-700'"
                 x-text="$store.modal.authTab === 'login' ? 'Login' : 'Continue'">
             </button>
@@ -156,4 +234,22 @@
         </div>
     </div>
 </nav>
+
+<script>
+    function countrySelector() {
+        return {
+            countries: {},
+            selected: { name: "India", dial_code: "+91", flag: "https://flagcdn.com/in.svg" },
+            open: false,
+            async loadCountries() {
+                let res = await fetch("/country.json"); // 👈 your json file in /public
+                this.countries = await res.json();
+            },
+            selectCountry(country) {
+                this.selected = country;
+                this.open = false;
+            }
+        }
+    }
+</script>
 

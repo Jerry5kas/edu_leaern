@@ -1,0 +1,32 @@
+{
+    "IN": {
+        "name": "India",
+        "code": "IN",
+        "dial_code": "+91",
+        "flag": "https://flagcdn.com/in.svg"
+    },
+    "US": {
+        "name": "United States",
+        "code": "US",
+        "dial_code": "+1",
+        "flag": "https://flagcdn.com/us.svg"
+    },
+    "GB": {
+        "name": "United Kingdom",
+        "code": "GB",
+        "dial_code": "+44",
+        "flag": "https://flagcdn.com/gb.svg"
+    },
+    "CA": {
+        "name": "Canada",
+        "code": "CA",
+        "dial_code": "+1",
+        "flag": "https://flagcdn.com/ca.svg"
+    },
+    "AU": {
+        "name": "Australia",
+        "code": "AU",
+        "dial_code": "+61",
+        "flag": "https://flagcdn.com/au.svg"
+    }
+}
