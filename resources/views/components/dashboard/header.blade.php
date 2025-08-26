@@ -2,7 +2,6 @@
 <nav class="bg-white shadow-sm border-b sticky top-0 z-50" x-data="{ profileOpen: false, menuOpen: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
-
             <!-- Logo -->
             <div class="text-xl font-bold text-slate-800">
                 <a href="{{ route('dashboard') }}">
@@ -104,7 +103,7 @@
                                  alt="Default Profile" class="w-full h-full object-cover">
                         @endif
                     </button>
-                    
+
                     <!-- Profile Dropdown -->
                     <div x-show="profileOpen" @click.outside="profileOpen = false" x-transition
                          class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
