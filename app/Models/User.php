@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +23,18 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
-        'profile'
+        'profile',
+        'phone_e164',
+        'locale',
+        'timezone',
+        'country_code',
+        'date_of_birth',
+        'marketing_opt_in',
+        'legal_acceptance_version',
+        'last_login_at',
+        'last_login_ip',
+        'created_by',
+        'updated_by'
     ];
 
     /**
@@ -43,6 +54,58 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
         'password' => 'hashed',
+        'date_of_birth' => 'date',
+        'marketing_opt_in' => 'boolean',
+        'last_login_at' => 'datetime',
     ];
+
+    /**
+     * Get the social accounts for the user.
+     */
+    public function socialAccounts()
+    {
+        return $this->hasMany(SocialAccount::class);
+    }
+
+    /**
+     * Get the communication preferences for the user.
+     */
+    public function communicationPreferences()
+    {
+        return $this->hasOne(CommunicationPreference::class);
+    }
+
+    /**
+     * Get the addresses for the user.
+     */
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
+
+    /**
+     * Get the GDPR requests for the user.
+     */
+    public function gdprRequests()
+    {
+        return $this->hasMany(GdprRequest::class);
+    }
+
+    /**
+     * Get the user who created this user.
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Get the user who last updated this user.
+     */
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
