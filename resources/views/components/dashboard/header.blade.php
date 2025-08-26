@@ -5,8 +5,8 @@
 
             <!-- Logo -->
             <div class="text-xl font-bold text-slate-800">
-                <a href="/dashboard">
-                    Edu learn
+                <a href="{{ route('dashboard') }}">
+                    EduLearn
                 </a>
             </div>
 
@@ -79,10 +79,6 @@
                 }
             </script>
 
-
-            <!-- Alpine.js CDN -->
-
-
             <!-- Right Section -->
             <div class="flex items-center space-x-4">
                 <!-- Expert Info (hidden on mobile) -->
@@ -94,34 +90,37 @@
                 <!-- Profile Button -->
                 <div class="relative">
                     @php
-//                        $user = Auth::user();
+                        $user = Auth::user();
                     @endphp
 
                     <button @click="profileOpen = !profileOpen"
                             class="w-10 h-10 rounded-full border border-gray-300 shadow-sm overflow-hidden focus:outline-none">
-{{--                        @if($user && $user->profile)--}}
-{{--                            <img src="{{ asset('storage/profile_images/' . $user->profile) }}"--}}
-{{--                                 alt="Profile" class="w-full h-full object-cover">--}}
-{{--                        @else--}}
+                        @if($user && $user->profile)
+                            <img src="{{ asset('storage/profile_images/' . $user->profile) }}"
+                                 alt="Profile" class="w-full h-full object-cover">
+                        @else
                             <!-- Default avatar if no profile uploaded -->
-                            <img src="{{ asset('default-avatar.png') }}"
+                            <img src="{{ asset('default-avatar.svg') }}"
                                  alt="Default Profile" class="w-full h-full object-cover">
-{{--                        @endif--}}
+                        @endif
                     </button>
+                    
                     <!-- Profile Dropdown -->
                     <div x-show="profileOpen" @click.outside="profileOpen = false" x-transition
                          class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
-{{--                        @if($user)--}}
-{{--                            <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">{{ $user->name }}</p>--}}
-{{--                        @else--}}
+                        @if($user)
+                            <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">{{ $user->name }}</p>
+                        @else
                             <p class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Guest</p>
-{{--                        @endif--}}
-                        <a href="{{ route('auth.profile') }}"
+                        @endif
+                        <a href="{{ route('profile') }}"
                            class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">View Profile</a>
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">Settings</a>
                         <div class="border-t"></div>
-                        <a href="{{ route('home.login') }}"
-                           class="block px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</a>
+                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                            @csrf
+                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 text-red-600 font-medium">Logout</button>
+                        </form>
                     </div>
                 </div>
 
@@ -144,8 +143,8 @@
     <!-- Mobile Menu -->
     <div x-show="menuOpen" x-transition class="md:hidden px-4 pb-4">
         <div class="pt-2 space-y-2 border-t border-gray-200">
-            <a href="#" class="block py-2 text-gray-700 font-medium">Dashboard</a>
-            <a href="#" class="block py-2 text-gray-700 font-medium">Courses</a>
+            <a href="{{ route('dashboard') }}" class="block py-2 text-gray-700 font-medium">Dashboard</a>
+            <a href="{{ route('courses.index') }}" class="block py-2 text-gray-700 font-medium">Courses</a>
             <a href="#" class="block py-2 text-gray-700 font-medium">Support</a>
             <div class="pt-2 border-t border-gray-100">
                 <a href="#" class="block py-2 text-gray-700">+91 90876 54321</a>
