@@ -72,3 +72,9 @@ Route::get('/courses/show', function () {
     return view('course.show');
 })->name('courses.show');
 
+Route::get('/cart', function () {
+    return view('cart.index');
+})->name('cart.index');
+Route::get('/checkout', function () {
+    return view('cart.checkout.index');
+})->name('cart.checkout.index');

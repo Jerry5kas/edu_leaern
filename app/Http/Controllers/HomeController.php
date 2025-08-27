@@ -9,20 +9,28 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Show the home page
-     */
-    public function showForm()
-    {
+    public function showForm(){
         return view('welcome');
     }
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-    /**
-     * Show the dashboard
-     */
+        if (Auth::attempt($credentials)) {
+            // ✅ redirect just like Google login
+            return redirect()->route('home.dashboard');
+        }
+
+        return redirect()->route('login')->with('error', 'Invalid credentials');
+    }
     public function dashboard()
     {
         $user = Auth::user();
-        return view('dashboard', ['user' => $user]);
+        return view('dashboard', compact('user'));
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('home.logout');
     }
 }
