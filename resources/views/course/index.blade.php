@@ -1,7 +1,5 @@
 <x-layouts.main>
     <div class="min-h-screen flex flex-col sm:flex-row" x-data="{ active: 'browse', search: '', menuOpen: false }">
-
-        <!-- Mobile Menu Toggle -->
         <!-- Mobile Menu Toggle -->
         <div class="sm:hidden bg-white shadow px-4 py-3 flex justify-between items-center">
             <h2 class="text-xl font-bold">SELF STUDY</h2>
@@ -21,52 +19,10 @@
             class="sm:block sm:w-64 w-full bg-white shadow-md p-6 space-y-4 sm:h-screen sm:overflow-y-auto"
         >
             <h2 class="sm:block hidden text-xl font-bold mb-4">SELF STUDY</h2>
-            <nav class="space-y-2">
-                @foreach([
-                    'browse' => 'Browse',
-                    'practice' => 'Practice',
-                    'tests' => 'Tests'
-                ] as $key => $label)
-                    <button
-                        @click="active = '{{ $key }}'; menuOpen = false"
-                        :class="active === '{{ $key }}' ? 'bg-teal-100 text-teal-700 font-semibold' : ''"
-                        class="w-full text-left px-4 py-2 rounded hover:bg-teal-50 flex items-center space-x-2"
-                    >
-                        <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
-                             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>{{ $label }}</span>
-                    </button>
-                @endforeach
-
-                <button class="w-full text-left px-4 py-2 rounded hover:bg-teal-50 flex items-center space-x-2">
-                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
-                         viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 13l4 4L19 7"/>
-                    </svg>
-                    <span>Playlist</span>
-                </button>
-
-                <button class="w-full text-left px-4 py-2 rounded hover:bg-teal-50 flex items-center space-x-2">
-                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
-                         viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M15 10l4.553 2.276A1 1 0 0120 13.118V18a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.118a1 1 0 01.447-.842L15 10z"/>
-                    </svg>
-                    <span>Free live classes</span>
-                </button>
-
-                <button class="w-full text-left px-4 py-2 rounded hover:bg-teal-50 flex items-center space-x-2">
-                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
-                         viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 4v16m8-8H4"/>
-                    </svg>
-                    <span>Other courses</span>
-                </button>
+            <nav>
+                <a href="\courses">Courses</a>
             </nav>
         </aside>
-
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto h-screen bg-gray-50 p-6">
             <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
