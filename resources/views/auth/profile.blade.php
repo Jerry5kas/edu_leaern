@@ -36,7 +36,7 @@
                                          alt="Profile"
                                          class="w-32 h-32 rounded-full object-cover border-4 border-gray-200">
                                 @endif
-                                
+
                                 <!-- Profile Image Upload -->
                                 <form action="{{ route('profile.image') }}" method="POST" enctype="multipart/form-data" class="mt-4">
                                     @csrf
@@ -87,15 +87,15 @@
                     <!-- Profile Information Form -->
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6">Personal Information</h3>
-                        
+
                         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Name -->
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                                    <input type="text" name="name" id="name" 
+                                    <input type="text" name="name" id="name"
                                            value="{{ old('name', $user->name ?? '') }}"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('name') border-red-500 @enderror"
                                            placeholder="Enter your full name">
@@ -107,7 +107,7 @@
                                 <!-- Email -->
                                 <div>
                                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                    <input type="email" name="email" id="email" 
+                                    <input type="email" name="email" id="email"
                                            value="{{ old('email', $user->email ?? '') }}"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('email') border-red-500 @enderror"
                                            placeholder="Enter your email">
@@ -119,7 +119,7 @@
                                 <!-- Phone -->
                                 <div>
                                     <label for="phone_e164" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                    <input type="tel" name="phone_e164" id="phone_e164" 
+                                    <input type="tel" name="phone_e164" id="phone_e164"
                                            value="{{ old('phone_e164', $user->phone_e164 ?? '') }}"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('phone_e164') border-red-500 @enderror"
                                            placeholder="+1234567890">
@@ -131,7 +131,7 @@
                                 <!-- Date of Birth -->
                                 <div>
                                     <label for="date_of_birth" class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-                                    <input type="date" name="date_of_birth" id="date_of_birth" 
+                                    <input type="date" name="date_of_birth" id="date_of_birth"
                                            value="{{ old('date_of_birth', $user->date_of_birth ? $user->date_of_birth->format('Y-m-d') : '') }}"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('date_of_birth') border-red-500 @enderror">
                                     @error('date_of_birth')
@@ -142,7 +142,7 @@
                                 <!-- Country -->
                                 <div>
                                     <label for="country_code" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                                    <select name="country_code" id="country_code" 
+                                    <select name="country_code" id="country_code"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('country_code') border-red-500 @enderror">
                                         <option value="">Select Country</option>
                                         <option value="DE" {{ old('country_code', $user->country_code ?? '') == 'DE' ? 'selected' : '' }}>Germany</option>
@@ -160,7 +160,7 @@
                                 <!-- Timezone -->
                                 <div>
                                     <label for="timezone" class="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
-                                    <select name="timezone" id="timezone" 
+                                    <select name="timezone" id="timezone"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('timezone') border-red-500 @enderror">
                                         <option value="">Select Timezone</option>
                                         <option value="Europe/Berlin" {{ old('timezone', $user->timezone ?? '') == 'Europe/Berlin' ? 'selected' : '' }}>Europe/Berlin</option>
@@ -178,7 +178,7 @@
                                 <!-- Language -->
                                 <div>
                                     <label for="locale" class="block text-sm font-medium text-gray-700 mb-2">Language</label>
-                                    <select name="locale" id="locale" 
+                                    <select name="locale" id="locale"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('locale') border-red-500 @enderror">
                                         <option value="">Select Language</option>
                                         <option value="de_DE" {{ old('locale', $user->locale ?? '') == 'de_DE' ? 'selected' : '' }}>German</option>
@@ -196,7 +196,7 @@
                             <!-- Marketing Opt-in -->
                             <div class="mt-6">
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="marketing_opt_in" value="1" 
+                                    <input type="checkbox" name="marketing_opt_in" value="1"
                                            {{ old('marketing_opt_in', $user->marketing_opt_in ?? false) ? 'checked' : '' }}
                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                                     <span class="ml-2 text-sm text-gray-700">Receive marketing communications and updates</span>
@@ -205,7 +205,7 @@
 
                             <!-- Submit Button -->
                             <div class="mt-6">
-                                <button type="submit" 
+                                <button type="submit"
                                         class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors">
                                     Update Profile
                                 </button>
@@ -216,15 +216,15 @@
                     <!-- Password Change Form -->
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6">Change Password</h3>
-                        
+
                         <form action="{{ route('profile.password') }}" method="POST">
                             @csrf
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Current Password -->
                                 <div>
                                     <label for="current_password" class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
-                                    <input type="password" name="current_password" id="current_password" 
+                                    <input type="password" name="current_password" id="current_password"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('current_password') border-red-500 @enderror"
                                            placeholder="Enter current password">
                                     @error('current_password')
@@ -235,7 +235,7 @@
                                 <!-- New Password -->
                                 <div>
                                     <label for="new_password" class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                                    <input type="password" name="new_password" id="new_password" 
+                                    <input type="password" name="new_password" id="new_password"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('new_password') border-red-500 @enderror"
                                            placeholder="Enter new password">
                                     @error('new_password')
@@ -246,7 +246,7 @@
                                 <!-- Confirm New Password -->
                                 <div class="md:col-span-2">
                                     <label for="new_password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
-                                    <input type="password" name="new_password_confirmation" id="new_password_confirmation" 
+                                    <input type="password" name="new_password_confirmation" id="new_password_confirmation"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                            placeholder="Confirm new password">
                                 </div>
@@ -264,7 +264,7 @@
 
                             <!-- Submit Button -->
                             <div class="mt-6">
-                                <button type="submit" 
+                                <button type="submit"
                                         class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
                                     Change Password
                                 </button>
@@ -275,23 +275,23 @@
                     <!-- Account Information -->
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6">Account Information</h3>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Account ID</label>
                                 <p class="text-gray-900">{{ $user->uuid ?? 'N/A' }}</p>
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Member Since</label>
                                 <p class="text-gray-900">{{ $user ? $user->created_at->format('F j, Y') : 'N/A' }}</p>
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Last Login</label>
                                 <p class="text-gray-900">{{ $user && $user->last_login_at ? $user->last_login_at->format('F j, Y g:i A') : 'Never' }}</p>
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Email Verified</label>
                                 <p class="text-gray-900">
@@ -308,4 +308,5 @@
             </div>
         </div>
     </div>
+
 </x-layouts.main>
