@@ -1,5 +1,5 @@
 <!-- Page Body -->
-<div class="min-h-screen bg-white font-[Outfit] flex flex-col lg:flex-row items-center justify-center px-4 gap-y-12 lg:gap-x-12 py-10">
+<div class="min-h-screen bg-white flex flex-col lg:flex-row items-center justify-center px-4 gap-y-12 lg:gap-x-12 py-10">
     <!-- Left Section: Text + Form -->
     <div class="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">

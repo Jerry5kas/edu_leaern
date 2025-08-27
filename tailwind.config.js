@@ -8,7 +8,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Outfit', 'sans-serif'],
+                sans: ['Outfit', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+                outfit: ['Outfit', 'sans-serif'],
+            },
+            fontWeight: {
+                'light': '300',
+                'normal': '400',
+                'medium': '500',
+                'semibold': '600',
+                'bold': '700',
             },
         },
     },

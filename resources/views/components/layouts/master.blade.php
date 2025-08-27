@@ -17,7 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@heroicons/vue@2.0.16/20/solid/style.css" rel="stylesheet">
 </head>
 
-<body class="font-sans">
+<body class="font-sans">q
 <div>
     <x-partials.nav/>
 </div>
