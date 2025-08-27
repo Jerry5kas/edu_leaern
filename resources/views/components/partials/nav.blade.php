@@ -6,6 +6,22 @@
             authTab: 'login'
         });
     });
+
+    // Handle URL parameters to open auth modal
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const authParam = urlParams.get('auth');
+        
+        if (authParam === 'login' || authParam === 'register') {
+            // Open the modal
+            Alpine.store('modal').showAuth = true;
+            Alpine.store('modal').authTab = authParam;
+            
+            // Clean up the URL
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    });
 </script>
 
 
