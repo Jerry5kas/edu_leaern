@@ -19,8 +19,8 @@
                 <!-- Thumbnail -->
                 <div @click="open = true" class="cursor-pointer relative">
                     @if($course->thumbnail_path)
-                        <img src="{{ asset('storage/' . $course->thumbnail_path) }}" 
-                             alt="{{ $course->title }}" 
+                        <img src="{{ asset('storage/' . $course->thumbnail_path) }}"
+                             alt="{{ $course->title }}"
                              class="w-full object-cover">
                     @else
                         <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
@@ -29,7 +29,7 @@
                             </svg>
                         </div>
                     @endif
-                    
+
                     <!-- Play Button -->
                     <button class="absolute bottom-4 left-4 bg-white bg-opacity-80 px-3 py-1 rounded-full flex items-center gap-2 text-sm font-semibold">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"
@@ -78,17 +78,17 @@
                         <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded font-semibold">{{ $tag->name }}</span>
                     @endforeach
                 </div>
-                
+
                 <h1 class="text-2xl font-bold leading-snug">{{ $course->title }}</h1>
-                
+
                 @if($course->subtitle)
                     <p class="text-gray-600 font-medium mt-1">{{ $course->subtitle }}</p>
                 @endif
-                
+
                 <p class="text-gray-700 font-medium mt-1">
                     {{ $course->creator ? $course->creator->name : 'Unknown Instructor' }}
                 </p>
-                
+
                 <p class="text-gray-500 mt-3 text-sm leading-relaxed">
                     {{ Str::limit($course->description, 200) }}
                     @if(strlen($course->description) > 200)
@@ -112,7 +112,7 @@
                     <p class="text-gray-500 text-xs">{{ $course->created_at->format('M j, Y') }}</p>
                 </div>
             </div>
-            
+
             <div class="flex items-start gap-3">
                 <div class="bg-gray-100 p-2 rounded-lg">
                     <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
@@ -125,7 +125,7 @@
                     <p class="text-gray-500 text-xs">{{ $course->lessons->count() }} lessons</p>
                 </div>
             </div>
-            
+
             <div class="flex items-start gap-3">
                 <div class="bg-gray-100 p-2 rounded-lg">
                     <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
@@ -138,17 +138,53 @@
                     <p class="text-gray-500 text-xs">Free preview available</p>
                 </div>
             </div>
-            
+
             <div class="flex gap-2 items-center">
-                @if($course->price_cents > 0)
-                    <button class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded font-semibold w-full">
-                        €{{ number_format($course->price_cents / 100, 2) }}
-                    </button>
+                @auth
+                    @php
+                        $isEnrolled = auth()->user()->enrollments()
+                            ->where('course_id', $course->id)
+                            ->where('status', 'active')
+                            ->exists();
+                    @endphp
+
+                    @if($isEnrolled)
+                        <a href="{{ route('enrollments.show', $course->slug) }}"
+                           class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded font-semibold w-full text-center">
+                            Continue Learning
+                        </a>
+                    @else
+                        @if($course->price_cents > 0)
+                            <div class="flex gap-2 w-full">
+                                <button id="add-to-cart-btn"
+                                        data-course-id="{{ $course->id }}"
+                                        data-course-price="{{ $course->price_cents }}"
+                                        data-course-currency="{{ $course->currency }}"
+                                        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold flex-1">
+                                    Add to Cart
+                                </button>
+                                <button id="buy-now-btn"
+                                        data-course-id="{{ $course->id }}"
+                                        data-course-price="{{ $course->price_cents }}"
+                                        data-course-currency="{{ $course->currency }}"
+                                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded font-semibold flex-1">
+                                    Buy Now - @if($course->currency === 'INR')₹{{ number_format($course->price_cents / 100, 2) }}@else€{{ number_format($course->price_cents / 100, 2) }}@endif
+                                </button>
+                        @else
+                            <button id="enroll-free-btn"
+                                    data-course-id="{{ $course->id }}"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded font-semibold w-full">
+                                Enroll Free
+                            </button>
+                        @endif
+                    @endif
                 @else
-                    <button class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded font-semibold w-full">
-                        Free
-                    </button>
-                @endif
+                    <a href="{{ route('login') }}" class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded font-semibold w-full text-center">
+                        Login to Enroll
+                    </a>
+                @endauth
+                </div>
+
                 <button class="p-2 border rounded hover:bg-gray-100">
                     <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.5"
                          viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -191,7 +227,7 @@
                                         <div class="ml-4">
                                             <h3 class="text-base font-semibold text-gray-800">{{ $lesson->title }}</h3>
                                             <p class="text-sm text-gray-500 mt-1">
-                                                Lesson {{ $loop->iteration }} • 
+                                                Lesson {{ $loop->iteration }} •
                                                 @if($lesson->duration_seconds)
                                                     {{ gmdate('H:i:s', $lesson->duration_seconds) }}
                                                 @else
@@ -245,8 +281,8 @@
                         <a href="{{ route('courses.show', $relatedCourse->slug) }}">
                             <div class="bg-blue-100 h-32 flex items-center justify-center rounded mb-4 relative">
                                 @if($relatedCourse->thumbnail_path)
-                                    <img src="{{ asset('storage/' . $relatedCourse->thumbnail_path) }}" 
-                                         alt="{{ $relatedCourse->title }}" 
+                                    <img src="{{ asset('storage/' . $relatedCourse->thumbnail_path) }}"
+                                         alt="{{ $relatedCourse->title }}"
                                          class="w-full h-full object-cover rounded">
                                 @else
                                     <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor"
@@ -263,13 +299,13 @@
                                         <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">{{ $relatedCourse->categories->first()->name }}</span>
                                     @endif
                                 </div>
-                                
+
                                 <h3 class="font-bold text-lg line-clamp-2">{{ $relatedCourse->title }}</h3>
-                                
+
                                 <p class="font-medium text-sm text-gray-700">
                                     {{ $relatedCourse->creator ? $relatedCourse->creator->name : 'Unknown Instructor' }}
                                 </p>
-                                
+
                                 @if($relatedCourse->price_cents > 0)
                                     <p class="font-bold text-lg text-green-600">
                                         €{{ number_format($relatedCourse->price_cents / 100, 2) }}
@@ -284,4 +320,201 @@
             </div>
         </div>
     @endif
+    <!-- Razorpay Integration -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle Add to Cart
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    const courseId = this.dataset.courseId;
+
+                    // Disable button to prevent double clicks
+                    this.disabled = true;
+                    this.textContent = 'Adding...';
+
+                    fetch('{{ route('cart.add') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            course_id: courseId
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message
+                            const message = document.createElement('div');
+                            message.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                            message.textContent = data.message;
+                            document.body.appendChild(message);
+                            
+                            // Update cart count
+                            if (data.cart_count !== undefined) {
+                                const cartCount = document.getElementById('cart-count');
+                                if (cartCount) {
+                                    cartCount.textContent = data.cart_count;
+                                    if (data.cart_count > 0) {
+                                        cartCount.style.display = 'flex';
+                                    } else {
+                                        cartCount.style.display = 'none';
+                                    }
+                                }
+                            }
+                            
+                            // Remove message after 3 seconds
+                            setTimeout(() => {
+                                if (message.parentNode) {
+                                    message.parentNode.removeChild(message);
+                                }
+                            }, 3000);
+                        } else {
+                            alert(data.message);
+                            // Update cart count even on error
+                            if (data.cart_count !== undefined) {
+                                const cartCount = document.getElementById('cart-count');
+                                if (cartCount) {
+                                    cartCount.textContent = data.cart_count;
+                                    if (data.cart_count > 0) {
+                                        cartCount.style.display = 'flex';
+                                    } else {
+                                        cartCount.style.display = 'none';
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    })
+                    .finally(() => {
+                        // Re-enable button
+                        addToCartBtn.disabled = false;
+                        addToCartBtn.textContent = 'Add to Cart';
+                    });
+                });
+            }
+
+            // Handle Buy Now (redirects to checkout)
+            const buyNowBtn = document.getElementById('buy-now-btn');
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener('click', function() {
+                    const courseId = this.dataset.courseId;
+
+                    // Disable button to prevent double clicks
+                    this.disabled = true;
+                    this.textContent = 'Processing...';
+
+                    // First add to cart, then redirect to checkout
+                    fetch('{{ route('cart.add') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            course_id: courseId
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update cart count
+                            if (data.cart_count !== undefined) {
+                                const cartCount = document.getElementById('cart-count');
+                                if (cartCount) {
+                                    cartCount.textContent = data.cart_count;
+                                    if (data.cart_count > 0) {
+                                        cartCount.style.display = 'flex';
+                                    } else {
+                                        cartCount.style.display = 'none';
+                                    }
+                                }
+                            }
+                            window.location.href = '{{ route('checkout.index') }}';
+                        } else {
+                            alert(data.message);
+                            // Update cart count even on error
+                            if (data.cart_count !== undefined) {
+                                const cartCount = document.getElementById('cart-count');
+                                if (cartCount) {
+                                    cartCount.textContent = data.cart_count;
+                                    if (data.cart_count > 0) {
+                                        cartCount.style.display = 'flex';
+                                    } else {
+                                        cartCount.style.display = 'none';
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    })
+                    .finally(() => {
+                        // Re-enable button
+                        buyNowBtn.disabled = false;
+                        const coursePrice = this.dataset.coursePrice;
+                        const courseCurrency = this.dataset.courseCurrency;
+                        if (courseCurrency === 'INR') {
+                            buyNowBtn.textContent = 'Buy Now - ₹' + (coursePrice / 100).toFixed(2);
+                        } else {
+                            buyNowBtn.textContent = 'Buy Now - €' + (coursePrice / 100).toFixed(2);
+                        }
+                    });
+                });
+            }
+
+            // Handle free course enrollment
+            const enrollFreeBtn = document.getElementById('enroll-free-btn');
+            if (enrollFreeBtn) {
+                enrollFreeBtn.addEventListener('click', function() {
+                    const courseId = this.dataset.courseId;
+
+                    // Disable button to prevent double clicks
+                    this.disabled = true;
+                    this.textContent = 'Processing...';
+
+                    // Create free enrollment
+                    fetch('{{ route('enrollments.store') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            course_id: courseId,
+                            is_free: true
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = data.redirect_url;
+                        } else {
+                            alert('Enrollment failed: ' + data.message);
+                            location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                        location.reload();
+                    })
+                    .finally(() => {
+                        // Re-enable button
+                        enrollFreeBtn.disabled = false;
+                        enrollFreeBtn.textContent = 'Enroll Free';
+                    });
+                });
+            }
+        });
+    </script>
 </x-layouts.main>

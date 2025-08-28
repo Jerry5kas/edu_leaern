@@ -12,6 +12,15 @@
                 </div>
 
                 <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+                    <a href="{{ route('courses.index') }}" class="text-gray-700 hover:text-blue-600 font-medium">Courses</a>
+                    <a href="{{ route('enrollments.index') }}" class="text-gray-700 hover:text-blue-600 font-medium">My Courses</a>
+                    <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-blue-600 font-medium relative">
+                        Cart
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                </div>
 {{--                <div class="hidden md:flex items-center space-x-6">--}}
 {{--                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>--}}
 {{--                    <a href="{{ route('courses.index') }}" class="text-gray-700 hover:text-blue-600 font-medium">Courses</a>--}}
@@ -225,7 +234,8 @@
         <div class="pt-2 space-y-2 border-t border-gray-200">
             <a href="{{ route('dashboard') }}" class="block py-2 text-gray-700 font-medium">Dashboard</a>
             <a href="{{ route('courses.index') }}" class="block py-2 text-gray-700 font-medium">Courses</a>
-            <a href="/cart" class="block py-2 text-gray-700 font-medium">My Cart</a>
+            <a href="{{ route('enrollments.index') }}" class="block py-2 text-gray-700 font-medium">My Courses</a>
+            <a href="{{ route('cart.index') }}" class="block py-2 text-gray-700 font-medium">Cart</a>
             <a href="/wishlist" class="block py-2 text-gray-700 font-medium">Wishlist</a>
             <a href="#" class="block py-2 text-gray-700 font-medium">Support</a>
             <div class="pt-2 border-t border-gray-100">
@@ -237,6 +247,28 @@
 
 <!-- Alpine JS Scripts -->
 <script>
+    // Update cart count
+    function updateCartCount() {
+        fetch('{{ route('cart.count') }}')
+            .then(response => response.json())
+            .then(data => {
+                const cartCount = document.getElementById('cart-count');
+                if (cartCount) {
+                    cartCount.textContent = data.count;
+                    if (data.count > 0) {
+                        cartCount.style.display = 'flex';
+                    } else {
+                        cartCount.style.display = 'none';
+                    }
+                }
+            })
+            .catch(error => console.error('Error updating cart count:', error));
+    }
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount();
+    });
     function searchComponent() {
         return {
             query: '',

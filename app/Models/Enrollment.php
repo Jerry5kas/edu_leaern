@@ -33,6 +33,11 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Payment::class);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
     public function certificate()
     {
         return $this->hasOne(Certificate::class);

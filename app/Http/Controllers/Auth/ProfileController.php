@@ -59,7 +59,7 @@ class ProfileController extends Controller
                 'email' => $request->email,
                 'phone_e164' => $request->phone_e164,
                 'date_of_birth' => $request->date_of_birth,
-                'locale' => $request->locale ?? 'de_DE',
+                'locale' => $request->local ?? 'de_DE',
                 'timezone' => $request->timezone ?? 'Europe/Berlin',
                 'country_code' => $request->country_code ?? 'DE',
                 'marketing_opt_in' => $request->has('marketing_opt_in'),
