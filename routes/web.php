@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\HomeController;
@@ -87,3 +87,12 @@ Route::get('/test-courses', function () {
     ]);
 });
 
+Route::get('/cart', function () {
+    return view('cart.index');
+})->name('cart.index');
+Route::get('/checkout', function () {
+    return view('cart.checkout.index');
+})->name('cart.checkout.index');
+Route::get('/wishlist', function () {
+    return view('cart.wishlist.index');
+})->name('cart.wishlist.index');
