@@ -78,6 +78,67 @@
         </div>
 
         <!-- Repeat course cards... -->
+        <!-- Course Card -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src="https://img-c.udemycdn.com/course/240x135/123456.jpg" class="w-full h-32 object-cover" alt="Course">
+            <div class="p-4">
+                <h3 class="font-semibold text-sm">Complete Flutter Guide 2025: Build Android, iOS and Web</h3>
+                <p class="text-xs text-gray-500 mt-1">Sagnik Bhattacharya, Paulina Knop</p>
+                <div class="flex items-center gap-1 mt-2 text-yellow-500 text-xs">
+                    ★★★★☆ <span class="text-gray-600 ml-1">(6,830)</span>
+                </div>
+                <div class="flex justify-between items-center mt-3">
+                    <span class="font-bold">₹529</span>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Highest Rated</span>
+                </div>
+            </div>
+        </div>
+        <!-- Course Card -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src="https://img-c.udemycdn.com/course/240x135/123456.jpg" class="w-full h-32 object-cover" alt="Course">
+            <div class="p-4">
+                <h3 class="font-semibold text-sm">Complete Flutter Guide 2025: Build Android, iOS and Web</h3>
+                <p class="text-xs text-gray-500 mt-1">Sagnik Bhattacharya, Paulina Knop</p>
+                <div class="flex items-center gap-1 mt-2 text-yellow-500 text-xs">
+                    ★★★★☆ <span class="text-gray-600 ml-1">(6,830)</span>
+                </div>
+                <div class="flex justify-between items-center mt-3">
+                    <span class="font-bold">₹529</span>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Highest Rated</span>
+                </div>
+            </div>
+        </div>
+        <!-- Course Card -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src="https://img-c.udemycdn.com/course/240x135/123456.jpg" class="w-full h-32 object-cover" alt="Course">
+            <div class="p-4">
+                <h3 class="font-semibold text-sm">Complete Flutter Guide 2025: Build Android, iOS and Web</h3>
+                <p class="text-xs text-gray-500 mt-1">Sagnik Bhattacharya, Paulina Knop</p>
+                <div class="flex items-center gap-1 mt-2 text-yellow-500 text-xs">
+                    ★★★★☆ <span class="text-gray-600 ml-1">(6,830)</span>
+                </div>
+                <div class="flex justify-between items-center mt-3">
+                    <span class="font-bold">₹529</span>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Highest Rated</span>
+                </div>
+            </div>
+        </div>
+        <!-- Course Card -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src="https://img-c.udemycdn.com/course/240x135/123456.jpg" class="w-full h-32 object-cover" alt="Course">
+            <div class="p-4">
+                <h3 class="font-semibold text-sm">Complete Flutter Guide 2025: Build Android, iOS and Web</h3>
+                <p class="text-xs text-gray-500 mt-1">Sagnik Bhattacharya, Paulina Knop</p>
+                <div class="flex items-center gap-1 mt-2 text-yellow-500 text-xs">
+                    ★★★★☆ <span class="text-gray-600 ml-1">(6,830)</span>
+                </div>
+                <div class="flex justify-between items-center mt-3">
+                    <span class="font-bold">₹529</span>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Highest Rated</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </div>
