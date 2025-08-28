@@ -64,11 +64,26 @@ Route::get('/auth/profile', function () {
 })->name('auth.profile');
 
 // Course routes
-Route::get('/courses', function () {
-    return view('course.index');
-})->name('courses.index');
+Route::get('/courses', [App\Http\Controllers\Course\CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/{slug}', [App\Http\Controllers\Course\CourseController::class, 'show'])->name('courses.show');
 
-Route::get('/courses/show', function () {
-    return view('course.show');
-})->name('courses.show');
+// Test route to check data
+Route::get('/test-courses', function () {
+    $courses = App\Models\Course::where('is_published', true)->with(['categories', 'tags', 'creator'])->get();
+    return response()->json([
+        'total_courses' => $courses->count(),
+        'courses' => $courses->map(function ($course) {
+            return [
+                'id' => $course->id,
+                'title' => $course->title,
+                'slug' => $course->slug,
+                'categories' => $course->categories->pluck('name'),
+                'tags' => $course->tags->pluck('name'),
+                'creator' => $course->creator ? $course->creator->name : 'Unknown',
+                'sections_count' => $course->sections->count(),
+                'lessons_count' => $course->lessons->count(),
+            ];
+        })
+    ]);
+});
 

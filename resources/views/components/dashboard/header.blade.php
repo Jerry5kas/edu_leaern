@@ -2,11 +2,19 @@
 <nav class="bg-white shadow-sm border-b sticky top-0 z-50" x-data="{ profileOpen: false, menuOpen: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
-            <!-- Logo -->
-            <div class="text-xl font-bold text-slate-800">
-                <a href="{{ route('dashboard') }}">
-                    EduLearn
-                </a>
+            <!-- Logo and Navigation -->
+            <div class="flex items-center space-x-8">
+                <div class="text-xl font-bold text-slate-800">
+                    <a href="{{ route('dashboard') }}">
+                        EduLearn
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+                    <a href="{{ route('courses.index') }}" class="text-gray-700 hover:text-blue-600 font-medium">Courses</a>
+                </div>
             </div>
 
             <!-- Search Box with Suggestions -->
