@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
 class AuthController extends Controller
 {
     /**
@@ -24,12 +23,20 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        \Log::info('Login attempt received', [
+            'email' => $request->email,
+            'has_password' => !empty($request->password),
+            'remember' => $request->filled('remember'),
+            'ip' => $request->ip()
+        ]);
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
 
         if ($validator->fails()) {
+            \Log::warning('Login validation failed', $validator->errors()->toArray());
             return back()->withErrors($validator)->withInput();
         }
 
@@ -37,7 +44,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $user = Auth::user();
-            
+            \Log::info('User logged in successfully', ['user_id' => $user->id, 'email' => $user->email]);
+
             // Update last login
             $user->update([
                 'last_login_at' => now(),
@@ -47,6 +55,7 @@ class AuthController extends Controller
             return redirect()->intended('/dashboard')->with('success', 'Welcome back!');
         }
 
+        \Log::warning('Login failed - invalid credentials', ['email' => $request->email]);
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->withInput($request->only('email'));

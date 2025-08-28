@@ -6,7 +6,25 @@
             authTab: 'login'
         });
     });
+
+    // Handle URL parameters to open auth modal
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const authParam = urlParams.get('auth');
+        
+        if (authParam === 'login' || authParam === 'register') {
+            // Open the modal
+            Alpine.store('modal').showAuth = true;
+            Alpine.store('modal').authTab = authParam;
+            
+            // Clean up the URL
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    });
 </script>
+
+
 
 <!-- Modal -->
 <div x-data @keydown.escape.window="$store.modal.showAuth = false">
@@ -74,7 +92,7 @@
 
             <!-- Google Login Button -->
             <div class="mb-6">
-                <a href="{{ route('google.login') }}" 
+                <a href="{{ route('google.login') }}"
                    class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -96,28 +114,15 @@
                 </div>
             </div>
 
-            <!-- Email/Password Forms -->
-            <form x-data="{ showPassword: false, showConfirmPassword: false }" 
-                  :action="$store.modal.authTab === 'login' ? '{{ route('auth.login') }}' : '{{ route('auth.register') }}'"
-                  method="POST" class="space-y-4">
+            <!-- Login Form -->
+            <form x-data="authForm()" x-show="$store.modal.authTab === 'login'" x-transition
+                  action="{{ route('auth.login') }}" method="POST" class="space-y-4">
                 @csrf
-                
-                <!-- Name field (only for register) -->
-                <div x-show="$store.modal.authTab === 'register'" x-transition>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input type="text" name="name" id="name" required
-                           value="{{ old('name') }}"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent @error('name') border-red-500 @enderror"
-                           placeholder="Enter your full name">
-                    @error('name')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
 
                 <!-- Email field -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input type="email" name="email" id="email" required
+                    <label for="login_email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" name="email" id="login_email" required
                            value="{{ old('email') }}"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent @error('email') border-red-500 @enderror"
                            placeholder="Enter your email address">
@@ -128,9 +133,9 @@
 
                 <!-- Password field -->
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label for="login_password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <div class="relative">
-                        <input :type="showPassword ? 'text' : 'password'" name="password" id="password" required
+                        <input :type="showPassword ? 'text' : 'password'" name="password" id="login_password" required
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent @error('password') border-red-500 @enderror"
                                placeholder="Enter your password">
                         <button type="button" @click="showPassword = !showPassword"
@@ -154,8 +159,78 @@
                     @enderror
                 </div>
 
-                <!-- Confirm Password field (only for register) -->
-                <div x-show="$store.modal.authTab === 'register'" x-transition>
+                <!-- Remember me -->
+                <div class="flex items-center">
+                    <input type="checkbox" name="remember" id="remember" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full py-3 px-4 rounded-md font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form x-data="authForm()" x-show="$store.modal.authTab === 'register'" x-transition
+                  action="{{ route('auth.register') }}" method="POST" class="space-y-4">
+                @csrf
+
+                <!-- Name field -->
+                <div>
+                    <label for="register_name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="name" id="register_name" required
+                           value="{{ old('name') }}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent @error('name') border-red-500 @enderror"
+                           placeholder="Enter your full name">
+                    @error('name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Email field -->
+                <div>
+                    <label for="register_email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" name="email" id="register_email" required
+                           value="{{ old('email') }}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent @error('email') border-red-500 @enderror"
+                           placeholder="Enter your email address">
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password field -->
+                <div>
+                    <label for="register_password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <input :type="showPassword ? 'text' : 'password'" name="password" id="register_password" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent @error('password') border-red-500 @enderror"
+                               placeholder="Enter your password">
+                        <button type="button" @click="showPassword = !showPassword"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                            <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <svg x-show="showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M3.98 8.223A10.477 10.477 0 002.036 12.32a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.95 0 3.767-.5 5.322-1.377M6.228 6.228A10.451 10.451 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639a10.451 10.451 0 01-1.293 2.366M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65"/>
+                            </svg>
+                        </button>
+                    </div>
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Confirm Password field -->
+                <div>
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
                     <div class="relative">
                         <input :type="showConfirmPassword ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" required
@@ -179,19 +254,21 @@
                     </div>
                 </div>
 
-                <!-- Remember me (only for login) -->
-                <div x-show="$store.modal.authTab === 'login'" x-transition class="flex items-center">
-                    <input type="checkbox" name="remember" id="remember" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                    <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                </div>
-
                 <!-- Submit Button -->
                 <button type="submit"
-                        class="w-full py-3 px-4 rounded-md font-medium text-white transition-colors"
-                        :class="$store.modal.authTab === 'login' ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'"
-                        x-text="$store.modal.authTab === 'login' ? 'Sign In' : 'Create Account'">
+                        class="w-full py-3 px-4 rounded-md font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                    Create Account
                 </button>
             </form>
+
+            <script>
+                document.addEventListener('alpine:init', () => {
+                    Alpine.data('authForm', () => ({
+                        showPassword: false,
+                        showConfirmPassword: false
+                    }));
+                });
+            </script>
 
             <!-- Help Text -->
             <p class="text-xs text-gray-500 mt-6 text-center">

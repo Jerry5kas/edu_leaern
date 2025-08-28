@@ -3,8 +3,4 @@
     <x-home.goal />
     <x-home.feauture-card />
     <x-home.download />
-
-
-
-
 </x-layouts.master>

@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\ProfileController;
 |
 */
 
+
 // Public routes
 Route::get('/', [HomeController::class, 'showForm'])->name('home');
 
@@ -28,7 +29,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
     Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
-    
+
     // Google OAuth routes
     Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
     Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
@@ -39,8 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/image', [ProfileController::class, 'updateProfileImage'])->name('profile.image');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    
+
     // Test route to verify authentication
     Route::get('/test-auth', function () {
         return response()->json([
