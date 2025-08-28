@@ -3,9 +3,9 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,6 @@ use App\Http\Controllers\Auth\ProfileController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
 // Public routes
 Route::get('/', [HomeController::class, 'showForm'])->name('home');
 
@@ -44,55 +42,60 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/image', [ProfileController::class, 'updateProfileImage'])->name('profile.image');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Test route to verify authentication
-    Route::get('/test-auth', function () {
+    // Redirect old route to new route
+    Route::get('/auth/profile', function () {
+        return redirect()->route('profile');
+    })->name('auth.profile');
+
+    // Course routes
+    Route::get('/courses', [App\Http\Controllers\Course\CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/{slug}', [App\Http\Controllers\Course\CourseController::class, 'show'])->name('courses.show');
+
+    // Enrollment routes
+    Route::get('/my-courses', [\App\Http\Controllers\Course\EnrollmentController::class, 'index'])->name('enrollments.index');
+    Route::get('/my-courses/{courseSlug}', [\App\Http\Controllers\Course\EnrollmentController::class, 'show'])->name('enrollments.show');
+    Route::post('/enrollments/create-order', [\App\Http\Controllers\Course\EnrollmentController::class, 'createOrder'])->name('enrollments.create-order');
+    Route::post('/enrollments/store', [\App\Http\Controllers\Course\EnrollmentController::class, 'store'])->name('enrollments.store');
+    Route::post('/enrollments/payment-failed', [\App\Http\Controllers\Course\EnrollmentController::class, 'paymentFailed'])->name('enrollments.payment-failed');
+
+    // Cart routes
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/cart/count', [App\Http\Controllers\CartController::class, 'getCartCount'])->name('cart.count');
+
+    // Checkout routes
+    Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/create-order', [App\Http\Controllers\CheckoutController::class, 'createOrder'])->name('checkout.create-order');
+    Route::post('/checkout/success', [App\Http\Controllers\CheckoutController::class, 'success'])->name('checkout.success');
+    Route::post('/checkout/failure', [App\Http\Controllers\CheckoutController::class, 'failure'])->name('checkout.failure');
+
+    // Test route for debugging cart
+    Route::get('/test-cart', function() {
+        $user = auth()->user();
+        $order = \App\Models\Order::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->with('items.course')
+            ->first();
+        
         return response()->json([
-            'authenticated' => auth()->check(),
-            'user' => auth()->user() ? [
-                'id' => auth()->user()->id,
-                'name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-                'roles' => auth()->user()->roles->pluck('name')
+            'user_id' => $user->id,
+            'order' => $order ? [
+                'id' => $order->id,
+                'status' => $order->status,
+                'items_count' => $order->items->count(),
+                'items' => $order->items->map(function($item) {
+                    return [
+                        'id' => $item->id,
+                        'course_id' => $item->course_id,
+                        'course_title' => $item->course->title,
+                        'quantity' => $item->quantity,
+                        'unit_price' => $item->unit_price_cents,
+                        'line_total' => $item->line_total_cents
+                    ];
+                })
             ] : null
         ]);
-    })->name('test.auth');
+    })->name('test.cart');
 });
 
-// Redirect old route to new route
-Route::get('/auth/profile', function () {
-    return redirect()->route('profile');
-})->name('auth.profile');
-
-// Course routes
-Route::get('/courses', [App\Http\Controllers\Course\CourseController::class, 'index'])->name('courses.index');
-Route::get('/courses/{slug}', [App\Http\Controllers\Course\CourseController::class, 'show'])->name('courses.show');
-
-// Test route to check data
-Route::get('/test-courses', function () {
-    $courses = App\Models\Course::where('is_published', true)->with(['categories', 'tags', 'creator'])->get();
-    return response()->json([
-        'total_courses' => $courses->count(),
-        'courses' => $courses->map(function ($course) {
-            return [
-                'id' => $course->id,
-                'title' => $course->title,
-                'slug' => $course->slug,
-                'categories' => $course->categories->pluck('name'),
-                'tags' => $course->tags->pluck('name'),
-                'creator' => $course->creator ? $course->creator->name : 'Unknown',
-                'sections_count' => $course->sections->count(),
-                'lessons_count' => $course->lessons->count(),
-            ];
-        })
-    ]);
-});
-
-Route::get('/cart', function () {
-    return view('cart.index');
-})->name('cart.index');
-Route::get('/checkout', function () {
-    return view('cart.checkout.index');
-})->name('cart.checkout.index');
-Route::get('/wishlist', function () {
-    return view('cart.wishlist.index');
-})->name('cart.wishlist.index');
