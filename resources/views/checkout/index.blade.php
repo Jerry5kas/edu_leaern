@@ -3,7 +3,49 @@
         <div class="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Left Section -->
             <div class="lg:col-span-1 space-y-6 w-full">
-                <!-- Billing Address -->
+                <!-- Order Details -->
+                <div class="bg-white shadow-md rounded-xl p-6 w-full">
+                    <h2 class="font-semibold text-lg mb-4">Order details ({{ $order->items->count() }} course{{ $order->items->count() > 1 ? 's' : '' }})</h2>
+                    @foreach($order->items as $item)
+                        <div class="flex justify-between items-center {{ !$loop->last ? 'mb-4' : '' }}">
+                            <div class="flex gap-3 items-center min-w-0">
+                                <div class="w-20 h-14 bg-gray-200 rounded overflow-hidden flex-shrink-0">
+                                    @if($item->course->thumbnail_path)
+                                        <img src="{{ asset('storage/' . $item->course->thumbnail_path) }}"
+                                             alt="{{ $item->course->title }}"
+                                             class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center">
+                                            <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A4 4 0 0112 15a4 4 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"/>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
+                                <p class="text-sm font-medium truncate">{{ $item->course->title }}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-semibold">
+                                    @if($order->currency === 'INR')
+                                        ₹{{ number_format($item->unit_price_cents / 100, 2) }}
+                                    @else
+                                        €{{ number_format($item->unit_price_cents / 100, 2) }}
+                                    @endif
+                                </p>
+                                <p class="text-gray-400 line-through text-sm">
+                                    @if($order->currency === 'INR')
+                                        ₹{{ number_format(($item->unit_price_cents * 8) / 100, 2) }}
+                                    @else
+                                        €{{ number_format(($item->unit_price_cents * 8) / 100, 2) }}
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Billing Address -->
                 <div class="bg-white shadow-md rounded-xl p-6 w-full">
                     <h2 class="font-semibold text-lg mb-4">Billing address</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,6 +131,18 @@
                                 <span class="font-medium">Mobile Wallets</span>
                             </label>
                         </div>
+
+                        <!-- Razorpay -->
+                        <div>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="payment" value="razorpay" x-model="payment" class="form-radio text-purple-600">
+                                <span class="font-medium">Razorpay</span>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" class="h-5 ml-2"/>
+                            </label>
+                            <div x-show="payment === 'razorpay'" x-transition class="ml-6 border rounded-lg p-4 mt-2 space-y-3">
+                                <p class="text-sm text-gray-600">You will be redirected to Razorpay secure gateway to complete your payment.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Proceed Button -->
@@ -100,48 +154,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Order Details -->
-                <div class="bg-white shadow-md rounded-xl p-6 w-full">
-                    <h2 class="font-semibold text-lg mb-4">Order details ({{ $order->items->count() }} course{{ $order->items->count() > 1 ? 's' : '' }})</h2>
-                    @foreach($order->items as $item)
-                        <div class="flex justify-between items-center {{ !$loop->last ? 'mb-4' : '' }}">
-                            <div class="flex gap-3 items-center min-w-0">
-                                <div class="w-20 h-14 bg-gray-200 rounded overflow-hidden flex-shrink-0">
-                                    @if($item->course->thumbnail_path)
-                                        <img src="{{ asset('storage/' . $item->course->thumbnail_path) }}" 
-                                             alt="{{ $item->course->title }}" 
-                                             class="w-full h-full object-cover">
-                                    @else
-                                        <div class="w-full h-full flex items-center justify-center">
-                                            <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A4 4 0 0112 15a4 4 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"/>
-                                            </svg>
-                                        </div>
-                                    @endif
-                                </div>
-                                <p class="text-sm font-medium truncate">{{ $item->course->title }}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold">
-                                    @if($order->currency === 'INR')
-                                        ₹{{ number_format($item->unit_price_cents / 100, 2) }}
-                                    @else
-                                        €{{ number_format($item->unit_price_cents / 100, 2) }}
-                                    @endif
-                                </p>
-                                <p class="text-gray-400 line-through text-sm">
-                                    @if($order->currency === 'INR')
-                                        ₹{{ number_format(($item->unit_price_cents * 8) / 100, 2) }}
-                                    @else
-                                        €{{ number_format(($item->unit_price_cents * 8) / 100, 2) }}
-                                    @endif
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
 
             <!-- Right Section (Order Summary) -->
             <div class="bg-white shadow-md rounded-xl p-6 w-full self-start space-y-4">
@@ -189,7 +201,7 @@
 
                 <!-- Proceed Button -->
                 <div>
-                    <button onclick="initiatePayment()" 
+                    <button onclick="initiatePayment()"
                             class="w-full bg-gray-800 text-white py-3 rounded-lg font-medium hover:bg-gray-700 transition-all">
                         Proceed
                     </button>
@@ -215,7 +227,7 @@
     <script>
         function initiatePayment() {
             const payButton = document.querySelector('button[onclick="initiatePayment()"]');
-            
+
             // Disable button to prevent double clicks
             payButton.disabled = true;
             payButton.textContent = 'Processing...';
@@ -261,7 +273,7 @@
                                     message.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
                                     message.textContent = data.message;
                                     document.body.appendChild(message);
-                                    
+
                                     // Remove message after 3 seconds and redirect
                                     setTimeout(() => {
                                         if (message.parentNode) {
@@ -288,10 +300,10 @@
                             color: '#7C3AED'
                         }
                     };
-                    
+
                     const rzp = new Razorpay(options);
                     rzp.open();
-                    
+
                     rzp.on('payment.failed', function (response) {
                         // Handle payment failure
                         fetch('{{ route('checkout.failure') }}', {

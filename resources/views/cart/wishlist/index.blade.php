@@ -10,7 +10,7 @@
         <!-- Desktop Nav -->
         <nav class="hidden md:flex space-x-6 text-sm font-medium">
             <a href="#" class="hover:text-gray-300">All courses</a>
-            <a href="#" class="hover:text-gray-300">My Lists</a>
+            <a href="{{ route('enrollments.index') }}" class="text-white hover:text-gray-300 font-medium">My Courses</a>
             <a href="#" class="border-b-2 border-white pb-1">Wishlist</a>
             <a href="#" class="hover:text-gray-300">Certifications</a>
             <a href="#" class="hover:text-gray-300">Archived</a>
@@ -30,7 +30,7 @@
     <!-- Mobile Menu -->
     <div x-show="mobileMenu" class="md:hidden px-4 pb-4 space-y-2">
         <a href="#" class="block hover:text-gray-300">All courses</a>
-        <a href="#" class="block hover:text-gray-300">My Lists</a>
+        <a href="/my-courses" class="block hover:text-gray-300">My Lists</a>
         <a href="#" class="block border-b-2 border-white">Wishlist</a>
         <a href="#" class="block hover:text-gray-300">Certifications</a>
         <a href="#" class="block hover:text-gray-300">Archived</a>
