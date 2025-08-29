@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
             ->where('status', 'pending')
             ->with('items.course')
             ->first();
-        
+
         return response()->json([
             'user_id' => $user->id,
             'order' => $order ? [
@@ -98,4 +98,6 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('test.cart');
 });
-
+Route::get('/wishlist',function() {
+    return view('cart.wishlist.index');
+})->name('cart.wishlist.index');

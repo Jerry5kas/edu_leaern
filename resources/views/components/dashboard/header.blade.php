@@ -13,13 +13,8 @@
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
-                    <a href="{{ route('courses.index') }}" class="text-gray-700 hover:text-blue-600 font-medium">Courses</a>
-                    <a href="{{ route('enrollments.index') }}" class="text-gray-700 hover:text-blue-600 font-medium">My Courses</a>
-                    <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-blue-600 font-medium relative">
-                        Cart
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                    </a>
+
+
                 </div>
 {{--                <div class="hidden md:flex items-center space-x-6">--}}
 {{--                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>--}}
@@ -165,7 +160,17 @@
                         </div>
                     </div>
                 </div>
-
+                <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-blue-600 font-medium relative">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24"
+                         stroke-width="1.5" stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M2.25 2.25h1.386c.51 0 .955.343 1.087.835l.383 1.437m0 0L6.75 12h10.5l2.25-6.75H6.75m-1.644-2.478L6.75 12m0 0l-1.5 4.5h12.75m-12.75 0A1.5 1.5 0 106.75 21a1.5 1.5 0 00-1.5-1.5zm12.75 0a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z" />
+                    </svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
                 <!-- Profile Button -->
                 <div class="relative">
                     @php

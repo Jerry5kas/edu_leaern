@@ -37,12 +37,24 @@
                 </button>
             </div>
 
-            <nav class="mt-12 bg-white flex flex-col gap-4 p-4">
-                <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 rounded hover:bg-gray-100 font-medium text-gray-700">
-                    Dashboard
+            <nav class="mt-6 bg-white flex flex-col gap-4 p-4 ">
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100 font-medium text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25A2.25 2.25 0 0 1 8.25 10.5H6A2.25 2.25 0 0 1 3.75 8.25V6Zm9.75 0A2.25 2.25 0 0 1 15.75 3.75H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25A2.25 2.25 0 0 1 13.5 8.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 8.25 20.25H6A2.25 2.25 0 0 1 3.75 18v-2.25Zm9.75 0A2.25 2.25 0 0 1 15.75 13.5H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                    </svg>
+                    <span>Dashboard</span>
                 </a>
-                <a href="{{ route('courses.index') }}" class="flex items-center px-4 py-2 rounded hover:bg-gray-100 font-medium text-gray-700">
-                    Courses
+                <a href="{{ route('courses.index') }}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100 font-medium text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 6.75c-2.118-1.264-4.5-1.5-6.75-1.5A2.25 2.25 0 0 0 3 7.5v9.75A2.25 2.25 0 0 1 5.25 19.5c2.25 0 4.632.236 6.75 1.5m0-14.25c2.118-1.264 4.5-1.5 6.75-1.5A2.25 2.25 0 0 1 21 7.5v9.75a2.25 2.25 0 0 0-2.25 2.25c-2.25 0-4.632.236-6.75 1.5m0-14.25v14.25" />
+                    </svg>
+                    <span>Courses</span>
                 </a>
             </nav>
         </aside>

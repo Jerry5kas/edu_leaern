@@ -156,13 +156,27 @@
                     @else
                         @if($course->price_cents > 0)
                             <div class="flex gap-2 w-full">
+                                <!-- Add to Cart Button -->
                                 <button id="add-to-cart-btn"
-                                        data-course-id="{{ $course->id }}"
-                                        data-course-price="{{ $course->price_cents }}"
-                                        data-course-currency="{{ $course->currency }}"
-                                        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold flex-1">
-                                    Add to Cart
+                                        x-data
+                                        @click="$dispatch('cart-add', {
+            id: '{{ $course->id }}',
+            price: '{{ $course->price_cents }}',
+            currency: '{{ $course->currency }}'
+        })"
+                                        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold flex items-center justify-center w-full sm:w-auto transition">
+
+                                    <!-- Cart SVG Icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor"
+                                         class="w-6 h-6">
+                                        <path stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              d="M2.25 2.25h1.386c.51 0 .955.343 1.087.835l.383 1.437m0 0L6.75 12h10.5l2.25-6.75H6.75m-1.644-2.478L6.75 12m0 0l-1.5 4.5h12.75m-12.75 0A1.5 1.5 0 106.75 21a1.5 1.5 0 00-1.5-1.5zm12.75 0a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z" />
+                                    </svg>
                                 </button>
+
                                 <button id="buy-now-btn"
                                         data-course-id="{{ $course->id }}"
                                         data-course-price="{{ $course->price_cents }}"
@@ -352,7 +366,7 @@
                             message.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
                             message.textContent = data.message;
                             document.body.appendChild(message);
-                            
+
                             // Update cart count
                             if (data.cart_count !== undefined) {
                                 const cartCount = document.getElementById('cart-count');
@@ -365,7 +379,7 @@
                                     }
                                 }
                             }
-                            
+
                             // Remove message after 3 seconds
                             setTimeout(() => {
                                 if (message.parentNode) {
